@@ -59,7 +59,7 @@ RUN cd /tmp/llvm/projects && \
     svn co http://llvm.org/svn/llvm-project/libcxx/trunk libcxx
 RUN export REQUIRES_RTTI=1
 RUN mkdir /tmp/build && \
-    cd /tmp/llvm/build && \
+    cd /tmp/build && \
     cmake -G "Unix Makefiles" -DLLVM_ENABLE_RTTI=ON ../llvm
 
 # RUN rm -rf /tmp/thrift*
