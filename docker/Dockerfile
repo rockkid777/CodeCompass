@@ -56,7 +56,7 @@ RUN cd /tmp/llvm/tools/clang/tools && \
 RUN cd /tmp/llvm/projects && \
     svn co http://llvm.org/svn/llvm-project/compiler-rt/trunk compiler-rt
 RUN cd /tmp/llvm/projects && \
-    svn svn co http://llvm.org/svn/llvm-project/libcxx/trunk libcxx
+    svn co http://llvm.org/svn/llvm-project/libcxx/trunk libcxx
 RUN export REQUIRES_RTTI=1
 RUN mkdir /tmp/build && \
     cd /tmp/llvm/build && \
