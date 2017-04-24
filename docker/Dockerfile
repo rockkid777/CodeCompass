@@ -60,8 +60,8 @@ RUN cd /tmp/llvm/projects && \
 RUN export REQUIRES_RTTI=1
 RUN mkdir /tmp/build && \
     cd /tmp/build && \
-    cmake -G "Unix Makefiles" -DLLVM_ENABLE_RTTI=ON ../llvm
-RUN make
+    cmake -G "Unix Makefiles" -DLLVM_ENABLE_RTTI=ON ../llvm && \
+    make
 
 # RUN rm -rf /tmp/thrift*
 # RUN rm -rf /tmp/llvm
