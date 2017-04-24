@@ -45,7 +45,7 @@ RUN npm install npm@latest -g
 # RUN tar -xf /tmp/clang+llvm.tar.xz -C /opt/local/clang+llvm
 
 #move this line up!
-RUN apt-get install --yes svn
+RUN apt-get install --yes subversion
 
 RUN cd /tmp/ && \
     svn co http://llvm.org/svn/llvm-project/llvm/trunk llvm
