@@ -43,7 +43,7 @@ RUN cd /tmp/ && \
     tar -xf cfe-3.8.0.src.tar.xz && \
     tar -xf compiler-rt-3.8.0.src.tar.xz
 RUN mv /tmp/llvm-3.8.0.src /tmp/llvm && \
-    mv /tmp/cfe-3.8.0.src /tmp/llvm/clang && \
+    mv /tmp/cfe-3.8.0.src /tmp/llvm/tools/clang && \
     mv /tmp/compiler-rt-3.8.0.src /tmp/llvm/projects/compiler-rt
 RUN mkdir /tmp/build && \
     cd /tmp/build && \
