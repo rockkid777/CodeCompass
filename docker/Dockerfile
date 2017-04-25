@@ -54,7 +54,7 @@ RUN cd /tmp/ && \
     wget http://www.codesynthesis.com/download/odb/2.4/libodb-2.4.0.tar.gz && \
     tar -xvf libodb-2.4.0.tar.gz
 RUN cd /tmp/libodb-2.4.0 && \
-    ./configure --prefix=/opt/odb && \
+    ./configure && \
     make install
 RUN apt-get install --yes gcc-5-plugin-dev
 RUN apt-get install --yes libcutl-dev
@@ -63,14 +63,14 @@ RUN cd /tmp/ && \
     wget http://www.codesynthesis.com/download/odb/2.4/libodb-pgsql-2.4.0.tar.gz && \
     tar -xvf libodb-pgsql-2.4.0.tar.gz && \
     cd libodb-pgsql-2.4.0 && \
-    ./configure --prefix=/opt/odb && \
+    ./configure && \
     make install
 
 RUN cd /tmp/ && \
     wget http://www.codesynthesis.com/download/odb/2.4/odb-2.4.0.tar.gz && \
     tar -xvf odb-2.4.0.tar.gz && \
     cd odb-2.4.0 && \
-    ./configure --prefix=/opt/odb --with-libodb=/opt/odb && \
+    ./configure && \
     make install
 
 RUN export CMAKE_PREFIX_PATH=/opt/odb:$CMAKE_PREFIX_PATH
