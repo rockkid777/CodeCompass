@@ -19,13 +19,6 @@ RUN apt-get install --yes ctags
 RUN apt-get install --yes wget
 RUN apt-get install --yes curl
 
-# RUN apt-get install --yes npm
-# RUN npm install -g semver
-# RUN curl -sL https://deb.nodesource.com/setup_6.x | bash - && \
-# 	apt-get update && apt-get install -y nodejs && \
-# 	npm install npm@latest -g
-# RUN npm set strict-ssl false
-
 RUN wget http://xenia.sote.hu/ftp/mirrors/www.apache.org/thrift/0.10.0/thrift-0.10.0.tar.gz -O /tmp/thrift.tar.gz && \
 mkdir /tmp/thrift && \
 tar -xvf /tmp/thrift.tar.gz -C /tmp/ && \
@@ -40,10 +33,6 @@ RUN apt-get update
 RUN apt-get install --yes nodejs
 RUN npm install npm@latest -g
 
-# RUN wget http://releases.llvm.org/3.8.0/clang+llvm-3.8.0-x86_64-linux-gnu-ubuntu-16.04.tar.xz -O /tmp/clang+llvm.tar.xz
-# RUN mkdir -p /opt/local/clang+llvm
-# RUN tar -xf /tmp/clang+llvm.tar.xz -C /opt/local/clang+llvm
-
 #move this line up!
 RUN apt-get install --yes subversion
 
@@ -55,19 +44,36 @@ RUN cd /tmp/llvm/tools/clang/tools && \
     svn co http://llvm.org/svn/llvm-project/clang-tools-extra/trunk extra
 RUN cd /tmp/llvm/projects && \
     svn co http://llvm.org/svn/llvm-project/compiler-rt/trunk compiler-rt
-# RUN cd /tmp/llvm/projects && \
-#     svn co http://llvm.org/svn/llvm-project/libcxx/trunk libcxx
 RUN export REQUIRES_RTTI=1
 RUN mkdir /tmp/build && \
     cd /tmp/build && \
     cmake -G "Unix Makefiles" -DLLVM_ENABLE_RTTI=ON ../llvm && \
     make
 
+RUN cd /tmp/ && \
+    wget ttp://www.codesynthesis.com/download/odb/2.4/libodb-2.4.0.tar.gz && \
+    tar -xvf libodb-2.4.0.tar.gz
+RUN cd /tmp/libodb-2.4.0 && \
+    ./configure --prefix=/opt/odb && \
+    make install
+RUN apt-get install --yes gcc-5-plugin-dev
+RUN apt-get install --yes libcutl-dev
+RUN cd /tmp/ && \
+    wget http://www.codesynthesis.com/download/odb/2.4/libodb-pgsql-2.4.0.tar.gz && \
+    tar -xvf libodb-pgsql-2.4.0.tar.gz && \
+    cd libodb-pgsql-2.4.0
+    ./configure --prefix=/opt/odb && \
+    make install
+
+RUN cd /tmp/ && \
+    wget http://www.codesynthesis.com/download/odb/2.4/odb-2.4.0.tar.gz && \
+    tar -xvf odb-2.4.0.tar.gz && \
+    cd odb-2.4.0 && \
+    ./configure --prefix=/opt/odb && \
+    make install
+
+RUN export CMAKE_PREFIX_PATH=/opt/odb:$CMAKE_PREFIX_PATH
+
 # RUN rm -rf /tmp/thrift*
 # RUN rm -rf /tmp/llvm
 # RUN rm -rf /tmp/build
-
-# apt-get install -y build-essential && \
-# apt-get install -y llvm && \
-# apt-get install -y clang-3.8 && \
-# apt-get install -y cmake
