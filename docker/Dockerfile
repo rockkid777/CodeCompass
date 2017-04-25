@@ -58,6 +58,7 @@ RUN cd /tmp/libodb-2.4.0 && \
     make install
 RUN apt-get install --yes gcc-5-plugin-dev
 RUN apt-get install --yes libcutl-dev
+RUN apt-get install --yes postgresql-server-dev-9.5
 RUN cd /tmp/ && \
     wget http://www.codesynthesis.com/download/odb/2.4/libodb-pgsql-2.4.0.tar.gz && \
     tar -xvf libodb-pgsql-2.4.0.tar.gz && \
