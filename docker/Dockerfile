@@ -1,6 +1,7 @@
 FROM ubuntu:16.04
 
 ENV DEBIAN_FRONTEND noninteractive
+ENV REQUIRES_RTTI 1
 
 RUN apt-get update
 RUN apt-get install --yes apt-utils
@@ -20,35 +21,36 @@ RUN apt-get install --yes wget
 RUN apt-get install --yes curl
 
 RUN wget http://xenia.sote.hu/ftp/mirrors/www.apache.org/thrift/0.10.0/thrift-0.10.0.tar.gz -O /tmp/thrift.tar.gz && \
-mkdir /tmp/thrift && \
-tar -xvf /tmp/thrift.tar.gz -C /tmp/ && \
-cd /tmp/thrift-0.10.0 && \
-./configure --prefix=/opt/local/thrift && \
-make install && \
-export CMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH:/opt/local/thrift && \
-export PATH=/opt/local/thrift/bin:$PATH
+    mkdir /tmp/thrift && \
+    tar -xvf /tmp/thrift.tar.gz -C /tmp/ && \
+    cd /tmp/thrift-0.10.0 && \
+    ./configure && \
+    make install
 
+RUN rm -rf /tmp/thrift*
 RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
 RUN apt-get update
 RUN apt-get install --yes nodejs
 RUN npm install npm@latest -g
 
-#move this line up!
-RUN apt-get install --yes subversion
 
 RUN cd /tmp/ && \
-    svn co http://llvm.org/svn/llvm-project/llvm/trunk llvm
-RUN cd /tmp/llvm/tools && \
-    svn co http://llvm.org/svn/llvm-project/cfe/trunk clang
-RUN cd /tmp/llvm/tools/clang/tools && \
-    svn co http://llvm.org/svn/llvm-project/clang-tools-extra/trunk extra
-RUN cd /tmp/llvm/projects && \
-    svn co http://llvm.org/svn/llvm-project/compiler-rt/trunk compiler-rt
-RUN export REQUIRES_RTTI=1
+    wget http://releases.llvm.org/3.8.0/llvm-3.8.0.src.tar.xz && \
+    wget http://releases.llvm.org/3.8.0/cfe-3.8.0.src.tar.xz && \
+    wget http://releases.llvm.org/3.8.0/compiler-rt-3.8.0.src.tar.xz
+RUN tar -xf llvm-3.8.0.src.tar.xz && \
+    tar -xf cfe-3.8.0.src.tar.xz && \
+    tar -xf compiler-rt-3.8.0.src.tar.xz
+RUN mv /tmp/llvm-3.8.0.src /tmp/llvm && \
+    mv /tmp/cfe-3.8.0.src /tmp/llvm/clang && \
+    mv /tmp/compiler-rt-3.8.0.src /tmp/llvm/projects/compiler-rt
 RUN mkdir /tmp/build && \
     cd /tmp/build && \
     cmake -G "Unix Makefiles" -DLLVM_ENABLE_RTTI=ON ../llvm && \
-    make
+    make -j 8 install
+
+RUN rm -rf /tmp/llvm
+RUN rm -rf /tmp/build
 
 RUN cd /tmp/ && \
     wget http://www.codesynthesis.com/download/odb/2.4/libodb-2.4.0.tar.gz && \
@@ -72,10 +74,3 @@ RUN cd /tmp/ && \
     cd odb-2.4.0 && \
     ./configure && \
     make install
-
-RUN export CMAKE_PREFIX_PATH=/opt/odb:$CMAKE_PREFIX_PATH
-# LLVM: cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/opt/llvm/ -DLLVM_ENABLE_RTTI=ON ../llvm && \
-# don't use explicit path variables, intall systemwide instead
-# RUN rm -rf /tmp/thrift*
-# RUN rm -rf /tmp/llvm
-# RUN rm -rf /tmp/build
