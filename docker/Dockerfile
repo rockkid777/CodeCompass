@@ -51,7 +51,7 @@ RUN mkdir /tmp/build && \
     make
 
 RUN cd /tmp/ && \
-    wget ttp://www.codesynthesis.com/download/odb/2.4/libodb-2.4.0.tar.gz && \
+    wget http://www.codesynthesis.com/download/odb/2.4/libodb-2.4.0.tar.gz && \
     tar -xvf libodb-2.4.0.tar.gz
 RUN cd /tmp/libodb-2.4.0 && \
     ./configure --prefix=/opt/odb && \
