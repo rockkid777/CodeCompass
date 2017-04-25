@@ -70,12 +70,12 @@ RUN cd /tmp/ && \
     wget http://www.codesynthesis.com/download/odb/2.4/odb-2.4.0.tar.gz && \
     tar -xvf odb-2.4.0.tar.gz && \
     cd odb-2.4.0 && \
-    ./configure --prefix=/opt/odb && \
+    ./configure --prefix=/opt/odb --with-libodb=/opt/odb && \
     make install
 
 RUN export CMAKE_PREFIX_PATH=/opt/odb:$CMAKE_PREFIX_PATH
 # LLVM: cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/opt/llvm/ -DLLVM_ENABLE_RTTI=ON ../llvm && \
-
+# don't use explicit path variables, intall systemwide instead
 # RUN rm -rf /tmp/thrift*
 # RUN rm -rf /tmp/llvm
 # RUN rm -rf /tmp/build
