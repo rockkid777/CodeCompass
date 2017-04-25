@@ -38,7 +38,8 @@ RUN cd /tmp/ && \
     wget http://releases.llvm.org/3.8.0/llvm-3.8.0.src.tar.xz && \
     wget http://releases.llvm.org/3.8.0/cfe-3.8.0.src.tar.xz && \
     wget http://releases.llvm.org/3.8.0/compiler-rt-3.8.0.src.tar.xz
-RUN tar -xf llvm-3.8.0.src.tar.xz && \
+RUN cd /tmp/ && \
+    tar -xf llvm-3.8.0.src.tar.xz && \
     tar -xf cfe-3.8.0.src.tar.xz && \
     tar -xf compiler-rt-3.8.0.src.tar.xz
 RUN mv /tmp/llvm-3.8.0.src /tmp/llvm && \
