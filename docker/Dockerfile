@@ -27,11 +27,11 @@ RUN wget http://xenia.sote.hu/ftp/mirrors/www.apache.org/thrift/0.10.0/thrift-0.
     ./configure && \
     make install
 
-RUN rm -rf /tmp/thrift*
-RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
-RUN apt-get update
-RUN apt-get install --yes nodejs
-RUN npm install npm@latest -g
+# RUN rm -rf /tmp/thrift*
+# RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
+# RUN apt-get update
+# RUN apt-get install --yes nodejs
+# RUN npm install npm@latest -g
 
 
 RUN cd /tmp/ && \
@@ -75,3 +75,5 @@ RUN cd /tmp/ && \
     cd odb-2.4.0 && \
     ./configure && \
     make install
+
+RUN apt-get install --yes npm
