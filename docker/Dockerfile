@@ -27,13 +27,6 @@ RUN wget http://xenia.sote.hu/ftp/mirrors/www.apache.org/thrift/0.10.0/thrift-0.
     ./configure && \
     make install
 
-# RUN rm -rf /tmp/thrift*
-# RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
-# RUN apt-get update
-# RUN apt-get install --yes nodejs
-# RUN npm install npm@latest -g
-
-
 RUN cd /tmp/ && \
     wget http://releases.llvm.org/3.8.0/llvm-3.8.0.src.tar.xz && \
     wget http://releases.llvm.org/3.8.0/cfe-3.8.0.src.tar.xz && \
@@ -77,3 +70,5 @@ RUN cd /tmp/ && \
     make install
 
 RUN apt-get install --yes npm
+
+ENV JAVA_TOOL_OPTIONS -Dfile.encoding=UTF8
