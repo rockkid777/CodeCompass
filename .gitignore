@@ -17,3 +17,6 @@ nbproject
 # Other
 
 /build/
+
+# Docker compose file
+docker-compose.yaml
